@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "soloSwitch", "soloSwitch\soloSwitch.csproj", "{EA96BD82-A539-4812-8ABA-A54764DE1A81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA96BD82-A539-4812-8ABA-A54764DE1A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA96BD82-A539-4812-8ABA-A54764DE1A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA96BD82-A539-4812-8ABA-A54764DE1A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA96BD82-A539-4812-8ABA-A54764DE1A81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB6DEC7C-90DF-48E3-8B8E-2790BE58D3B1}
+	EndGlobalSection
+EndGlobal
