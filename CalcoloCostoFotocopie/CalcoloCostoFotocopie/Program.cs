@@ -23,6 +23,7 @@ namespace CalcoloCostoFotocopie
             int numBn, numCol;
             double tot = 0;
 
+            //lettura controllata del numero di fotocopie in bianco e nero
             do
             {
                 Console.Write("\nInserisci il numero di fotocopie in bianco e nero: ");
