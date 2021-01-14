@@ -18,7 +18,7 @@ namespace Rubrica_telefonica
             int scelta;
             bool finito = false;
             int numContatti = 0;
-
+            
             do
             {
                 Console.Clear();
@@ -61,7 +61,7 @@ namespace Rubrica_telefonica
                         //incremento il numero di contatti in rubrica
                         numContatti++;
                         break;
-                    
+
                     case 2: //ricerca anagrafica
                         int sceltaTipoRicerca;
                         int altezzaDaCercare;
@@ -89,12 +89,12 @@ namespace Rubrica_telefonica
                                 do
                                 {
                                     Console.WriteLine("Inserisci l'altezza da ricercare (compresa tra 100 e 220 cm)");
-                                    altezzaDaCercare= int.Parse(Console.ReadLine());
+                                    altezzaDaCercare = int.Parse(Console.ReadLine());
                                     if (altezzaDaCercare < 100 || altezzaDaCercare > 220) Errore("");
                                 } while (altezzaDaCercare < 100 || altezzaDaCercare > 220);
                                 for (int i = 0; i < numContatti; i++)
                                 {
-                                    if (altezza[i]== altezzaDaCercare) { 
+                                    if (altezza[i] == altezzaDaCercare) {
                                         Console.WriteLine($"{i + 1}) {nomi[i]} \t {cell[i]} \t {email[i]} \t {eta[i]} \t {altezza[i]}");
                                     }
                                 }
@@ -102,7 +102,41 @@ namespace Rubrica_telefonica
                         }
 
                         break;
-                    
+
+                    case 3: //cancellazione di una anagrafica
+                        int sceltaAnagraficaDaCancellare;
+                        Console.WriteLine("Elenco delle anagrafiche in rubrica:");
+                        for (int i = 0; i < numContatti; i++)
+                        {
+                            Console.WriteLine($"{i + 1}) {nomi[i]} \t {cell[i]} \t {email[i]} \t {eta[i]} \t {altezza[i]}");
+                        }
+                        Console.WriteLine("Quale anagrafica vuoi cancellare?");
+                        do
+                        {
+                            sceltaAnagraficaDaCancellare = int.Parse(Console.ReadLine());
+                        } while (sceltaAnagraficaDaCancellare < 0 || sceltaAnagraficaDaCancellare > numContatti);
+                        //controllo se quella da eliminare è l'ultima anagrafica della rubrica
+                        if (sceltaAnagraficaDaCancellare == numContatti)
+                        {
+                            //se devo cancellare l'ultima anagrafica mi basta diminuire il numero di contatti memorizzati
+                            numContatti--;
+                        }
+                        else
+                        {
+                            //se invece l'anagrafica da cancellare è nei primi numcontatti-1 posti del vettore allora dovrò compattare il vettore
+                            for(int i = sceltaAnagraficaDaCancellare - 1; i < numContatti; i++)
+                            {
+                                nomi[i] = nomi[i + 1];
+                                eta[i] = eta[i + 1];
+                                altezza[i] = altezza[i + 1];
+                                email[i] = email[i + 1];
+                                cell[i] = cell[i + 1];
+                            }
+                            numContatti--;
+                        }
+                        
+                        break;
+
                     case 4: //stampa numero contatti
                         Console.WriteLine("In rubrica sono memorizzate " + numContatti + " anagrafiche ");
                         break;
@@ -120,7 +154,6 @@ namespace Rubrica_telefonica
                     Console.ReadKey();
                 }
             } while (finito == false);
-
         }
 
         static void Errore(string msg)
