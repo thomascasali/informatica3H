@@ -13,30 +13,46 @@ namespace Metodi
             int[,] tris = new int[3, 3];
             do
             {
-                CreaTris(ref tris);
-                StampaInteri(tris);
-                Stampa(tris);
+                CreaTris(ref tris); //passo la matrice per riferimento perché verrà modificata
+                StampaInteri(tris); //passo la matrice per valore perché NON verrà modificata
+                Stampa(tris); //stampo il tris con X e O in base al valore intero contenuto nella matrice
                 Console.WriteLine("\nSono presenti " + ContaGiocate(tris) + " simboli nel campo di gioco");
-                if (!Vittoria(tris))
+                if (!Vittoria(tris)) //controlla se qualcuno ha vinto
                 {
                     Console.WriteLine("\n non ha vinto nessuno premi un tasto per continuare");
                     Console.ReadKey();
                 }
             } while (!Vittoria(tris));
+            Console.WriteLine("Ha vinto il giocatore " + VittoriaPlayer(tris));
             Console.ReadKey();
         }
 
         static bool Vittoria(int[,] mat)
         {
-            if (mat[0, 0] == mat[0, 1] && mat[0, 1] == mat[0, 2]) return true;
-            if (mat[1, 0] == mat[1, 1] && mat[1, 1] == mat[1, 2]) return true;
-            if (mat[2, 0] == mat[2, 1] && mat[2, 1] == mat[2, 2]) return true;
-            if (mat[0, 0] == mat[1, 0] && mat[1, 0] == mat[2, 0]) return true;
-            if (mat[0, 1] == mat[1, 1] && mat[1, 1] == mat[2, 1]) return true;
-            if (mat[0, 2] == mat[1, 2] && mat[1, 2] == mat[2, 2]) return true;
-            if (mat[0, 0] == mat[1, 1] && mat[1, 1] == mat[2, 2]) return true;
-            if (mat[0, 2] == mat[1, 1] && mat[1, 1] == mat[2, 0]) return true;
+            //restituisce true se qualcuno ha vinto, altrimento false
+            if (mat[0, 0] == mat[0, 1] && mat[0, 1] == mat[0, 2] && mat[0, 0] != 0) return true;
+            if (mat[1, 0] == mat[1, 1] && mat[1, 1] == mat[1, 2] && mat[1, 0] != 0) return true;
+            if (mat[2, 0] == mat[2, 1] && mat[2, 1] == mat[2, 2] && mat[2, 0] != 0) return true;
+            if (mat[0, 0] == mat[1, 0] && mat[1, 0] == mat[2, 0] && mat[0, 0] != 0) return true;
+            if (mat[0, 1] == mat[1, 1] && mat[1, 1] == mat[2, 1] && mat[0, 1] != 0) return true;
+            if (mat[0, 2] == mat[1, 2] && mat[1, 2] == mat[2, 2] && mat[0, 2] != 0) return true;
+            if (mat[0, 0] == mat[1, 1] && mat[1, 1] == mat[2, 2] && mat[0, 0] != 0) return true;
+            if (mat[0, 2] == mat[1, 1] && mat[1, 1] == mat[2, 0] && mat[0, 2] != 0) return true;
             return false;
+        }
+
+        static int VittoriaPlayer(int[,] mat)
+        {
+            //restituisce (se c'è) il giocatore che ha vinto
+            if (mat[0, 0] == mat[0, 1] && mat[0, 1] == mat[0, 2] && mat[0, 0] != 0) return mat[0, 0];
+            if (mat[1, 0] == mat[1, 1] && mat[1, 1] == mat[1, 2] && mat[0, 0] != 0) return mat[1, 0];
+            if (mat[2, 0] == mat[2, 1] && mat[2, 1] == mat[2, 2] && mat[0, 0] != 0) return mat[2, 0];
+            if (mat[0, 0] == mat[1, 0] && mat[1, 0] == mat[2, 0] && mat[0, 0] != 0) return mat[0, 0];
+            if (mat[0, 1] == mat[1, 1] && mat[1, 1] == mat[2, 1] && mat[0, 0] != 0) return mat[0, 1];
+            if (mat[0, 2] == mat[1, 2] && mat[1, 2] == mat[2, 2] && mat[0, 0] != 0) return mat[0, 2];
+            if (mat[0, 0] == mat[1, 1] && mat[1, 1] == mat[2, 2] && mat[0, 0] != 0) return mat[0, 0];
+            if (mat[0, 2] == mat[1, 1] && mat[1, 1] == mat[2, 0] && mat[0, 0] != 0) return mat[0, 2];
+            return 0;
         }
         static void CreaTris(ref int[,] mat)
         {
