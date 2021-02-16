@@ -95,11 +95,12 @@ namespace Metodi
         static void Stampa(int[,] mat)
         {
             Console.WriteLine();
-            Console.WriteLine("\n-----------");
+            Console.WriteLine("\n-------------");
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
+                    if(j==0) Console.Write("| ");
                     switch (mat[i, j]) {
                         case 0:
                             Console.Write("  | ");
@@ -114,7 +115,7 @@ namespace Metodi
 
                 }
 
-                Console.WriteLine("\n-----------");
+                Console.WriteLine("\n-------------");
             }
         }
     }
