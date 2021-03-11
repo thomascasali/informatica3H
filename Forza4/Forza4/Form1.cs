@@ -13,6 +13,7 @@ namespace Forza4
     public partial class Form1 : Form
     {
         static int[,] forza4 = new int[6, 7];
+        static int turno=0;
         public Form1()
         {
             InitializeComponent();
@@ -59,22 +60,30 @@ namespace Forza4
             p.SizeMode = PictureBoxSizeMode.StretchImage;
             p.Click += new EventHandler(Cliccato);
 
-            for(int i = 0; i < 10; i++)
-            {
-                PictureBox pic = new PictureBox();
-                this.Controls.Add(pic);
-                pic.Top = 100;
-                pic.Left = 10+i*20;
-                pic.Height = 20;
-                pic.Width = 20;
-                if (i % 2 == 0) {
-                    pic.BackColor = Color.Red;
-                }
-                else
+            int top;
+            for (int i = 0; i < 6; i++) {
+                top = 100 + 55 * i;
+                for (int j = 0; j < 7; j++)
                 {
-                    pic.BackColor = Color.Yellow;
-                }
+                    PictureBox pic = new PictureBox();
+                    this.Controls.Add(pic);
+                    pic.Top = top;
+                    pic.Left = 10+j*55;
+                    pic.Height = 55;
+                    pic.Width = 55;
+                    pic.Tag = i + "," + j;
+                    pic.Click += new EventHandler(Cliccato);
+                    //pic.BorderStyle = BorderStyle.FixedSingle;
+                    //if (i % 2 == 0) {
+                    //    pic.BackColor = Color.Red;
+                    //}
+                    //else
+                    //{
+                    //    pic.BackColor = Color.Yellow;
+                    //}
+                    pic.Image = Properties.Resources.campo;
 
+                }
             }
 
 
@@ -82,7 +91,18 @@ namespace Forza4
 
         public void Cliccato(object sender, EventArgs e)
         {
-            MessageBox.Show("Ciao");
+            //MessageBox.Show("Ciao");
+            PictureBox p = (PictureBox)sender;
+            if (turno % 2 == 0)
+            {
+                p.Image = Properties.Resources.CampoGiallo;
+            }
+            else
+            {
+                p.Image = Properties.Resources.CampoRosso;
+            }
+            turno++;
+            //MessageBox.Show(p.Tag.ToString());
         }
 
         static int Riga(int colonna)
@@ -98,6 +118,15 @@ namespace Forza4
 
         private void btnCrea_Click(object sender, EventArgs e)
         {
+            //foreach(Control c in Controls)
+            //{
+            //    if(c.Tag != null) { 
+            //        if (c.Tag.ToString() == "1,1") {
+            //            MessageBox.Show("Bingo!");
+            //        }
+            //    }
+            //}
+
             for (int i = 0; i < 10; i++)
             {
                 PictureBox pic = new PictureBox();
@@ -115,6 +144,23 @@ namespace Forza4
                     pic.BackColor = Color.White;
                 }
 
+            }
+        }
+
+        private void btnCerca_Click(object sender, EventArgs e)
+        {
+            foreach(Control c in Controls)
+            {
+                if (c.Tag != null)
+                {
+                    if (c.Tag.ToString() == "5,4")
+                    {
+                        MessageBox.Show("Bingo!!!!");
+                        PictureBox p = (PictureBox)c;
+                        p.SizeMode= PictureBoxSizeMode.StretchImage;
+                        p.Image = Properties.Resources.Gettonerosso;
+                    }
+                }
             }
         }
     }
