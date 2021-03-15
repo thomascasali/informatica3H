@@ -103,6 +103,19 @@ namespace Forza4
             }
             turno++;
             //MessageBox.Show(p.Tag.ToString());
+            string[] coord = p.Tag.ToString().Split(',');
+            MessageBox.Show("la colonna cliccata è " + coord[1]);
+            MessageBox.Show("la prima riga libera dal basso è " + Riga(int.Parse(coord[1])));
+
+            try
+            {
+                MessageBox.Show("valore della matrice in posizione 7,7 " + forza4[7,7]);
+                int a = 1;
+            }
+            catch
+            {
+                MessageBox.Show("indice fuori dalla matrice");
+            }
         }
 
         static int Riga(int colonna)
