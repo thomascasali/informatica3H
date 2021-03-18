@@ -29,13 +29,37 @@ namespace Forza4
         /// </summary>
         private void InitializeComponent()
         {
+            this.btnCrea = new System.Windows.Forms.Button();
+            this.btnCerca = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // btnCrea
+            // 
+            this.btnCrea.Location = new System.Drawing.Point(630, 33);
+            this.btnCrea.Name = "btnCrea";
+            this.btnCrea.Size = new System.Drawing.Size(96, 46);
+            this.btnCrea.TabIndex = 0;
+            this.btnCrea.Text = "crea campo";
+            this.btnCrea.UseVisualStyleBackColor = true;
+            this.btnCrea.Click += new System.EventHandler(this.btnCrea_Click);
+            // 
+            // btnCerca
+            // 
+            this.btnCerca.Location = new System.Drawing.Point(688, 463);
+            this.btnCerca.Name = "btnCerca";
+            this.btnCerca.Size = new System.Drawing.Size(101, 50);
+            this.btnCerca.TabIndex = 1;
+            this.btnCerca.Text = "cerca";
+            this.btnCerca.UseVisualStyleBackColor = true;
+            this.btnCerca.Click += new System.EventHandler(this.btnCerca_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 465);
+            this.ClientSize = new System.Drawing.Size(800, 552);
+            this.Controls.Add(this.btnCerca);
+            this.Controls.Add(this.btnCrea);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -44,6 +68,9 @@ namespace Forza4
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnCrea;
+        private System.Windows.Forms.Button btnCerca;
     }
 }
 

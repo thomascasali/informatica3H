@@ -14,6 +14,7 @@ namespace Forza4
     {
         static int[,] forza4 = new int[6, 7];
         static int turno=0;
+        static int dimPicture;
         public Form1()
         {
             InitializeComponent();
@@ -21,6 +22,7 @@ namespace Forza4
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //inizializzo matrice
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 7; j++)
@@ -28,93 +30,85 @@ namespace Forza4
                     forza4[i, j] = 0;
                 }
             }
-            //inserimento di 3 gettoni per test del metodo
-            /*
-            forza4[5, 0] = 1; //gettone del giocatore 1
-            forza4[4, 0] = 2; //gettone del giocatore 2
-            forza4[5, 1] = 2; //gettone del giocatore 2
-            MessageBox.Show("La prima riga libera del campo nella colonna 0 è: " + Riga(0).ToString());
-            MessageBox.Show("La prima riga libera del campo nella colonna 1 è: " + Riga(1).ToString());
-            MessageBox.Show("La prima riga libera del campo nella colonna 2 è: " + Riga(2).ToString());
-            */
-            //fine test
-
-            //test creazione bottone
-            Button b = new Button();
-            this.Controls.Add(b);
-            b.Text = "Il mio bottone";
-            b.Top = 10;
-            b.Left = 10;
-            b.Height = 20;
-            b.Width = 100;
-
-            //test creazione PictureBox
-            PictureBox p = new PictureBox();
-            this.Controls.Add(p);
-            p.Top = 40;
-            p.Left = 10;
-            p.Height = 40;
-            p.Width = 40;
-            //p.BackColor = Color.Red;
-            p.Image = Properties.Resources.Gettonerosso;
-            p.SizeMode = PictureBoxSizeMode.StretchImage;
-            p.Click += new EventHandler(Cliccato);
-
+         
+            //creo il campo di gioco
             int top;
+            dimPicture = 90;
             for (int i = 0; i < 6; i++) {
-                top = 100 + 55 * i;
+                top = 0 + dimPicture * i;
                 for (int j = 0; j < 7; j++)
                 {
                     PictureBox pic = new PictureBox();
                     this.Controls.Add(pic);
                     pic.Top = top;
-                    pic.Left = 10+j*55;
-                    pic.Height = 55;
-                    pic.Width = 55;
+                    pic.Left = j* dimPicture;
+                    pic.Height = dimPicture;
+                    pic.Width = dimPicture;
+                    pic.SizeMode = PictureBoxSizeMode.StretchImage;
                     pic.Tag = i + "," + j;
                     pic.Click += new EventHandler(Cliccato);
-                    //pic.BorderStyle = BorderStyle.FixedSingle;
-                    //if (i % 2 == 0) {
-                    //    pic.BackColor = Color.Red;
-                    //}
-                    //else
-                    //{
-                    //    pic.BackColor = Color.Yellow;
-                    //}
                     pic.Image = Properties.Resources.campo;
-
                 }
             }
 
-
+            //ridimensiona la form
+            this.Height = dimPicture * 6+36;
+            this.Width = dimPicture * 7+16;
         }
 
         public void Cliccato(object sender, EventArgs e)
         {
-            //MessageBox.Show("Ciao");
-            PictureBox p = (PictureBox)sender;
-            if (turno % 2 == 0)
-            {
-                p.Image = Properties.Resources.CampoGiallo;
-            }
-            else
-            {
-                p.Image = Properties.Resources.CampoRosso;
-            }
             turno++;
-            //MessageBox.Show(p.Tag.ToString());
+            PictureBox p = (PictureBox)sender;
             string[] coord = p.Tag.ToString().Split(',');
-            MessageBox.Show("la colonna cliccata è " + coord[1]);
-            MessageBox.Show("la prima riga libera dal basso è " + Riga(int.Parse(coord[1])));
+            
+            //in base alle coordinate dalla picture cliccata risalgo a riga e colonna nella quale inserire il gettore
+            int riga = Riga(int.Parse(coord[1]));
+            int colonna = int.Parse(coord[1]);
+            //valorizzo il contenuto della matrice perché utilizzo la matrice per la ricerca della vittoria
+            forza4[riga, colonna] = (turno % 2) + 1;
+            //mi costruisco il tag della picture da colorare
+            string picDaColorare = riga.ToString() + "," + colonna.ToString();
+            //chiamo il metodo che mi consente di colorare la picture corretta
+            Colora(picDaColorare);
 
-            try
+            switch (Vittoria()) 
             {
-                MessageBox.Show("valore della matrice in posizione 7,7 " + forza4[7,7]);
-                int a = 1;
+                case 0:
+                    break;
+                case 1:
+                    MessageBox.Show("Vittoria GIOCATORE 2");
+                    //eventualmente far ripartire il gioco...
+                    break;
+                case 2:
+                    MessageBox.Show("Vittoria GIOCATORE 1");
+                    //eventualmente far ripartire il gioco...
+                    break;
             }
-            catch
+        }
+
+        private void Colora(string picDaColorare)
+        {
+            //scorre tutti gli elementi della form
+            foreach (Control c in Controls)
             {
-                MessageBox.Show("indice fuori dalla matrice");
+                if (c.Tag != null)
+                {
+                    if (c.Tag.ToString() == picDaColorare)
+                    {
+                        //quando trova la picture corretta da colorare la colora in base al turno
+                        PictureBox pic = (PictureBox)c;
+                        //mi sono creato oggetto di tipo PictureBox per poterlo gestire come tale
+                        if (turno % 2 == 0)
+                        {
+                            pic.Image = Properties.Resources.CampoGiallo;
+                        }
+                        else
+                        {
+                            pic.Image = Properties.Resources.CampoRosso;
+                        }
+                    }
+                }
             }
         }
 
@@ -129,52 +123,36 @@ namespace Forza4
             return rigalibera;
         }
 
-        private void btnCrea_Click(object sender, EventArgs e)
+        static int Vittoria()
         {
-            //foreach(Control c in Controls)
-            //{
-            //    if(c.Tag != null) { 
-            //        if (c.Tag.ToString() == "1,1") {
-            //            MessageBox.Show("Bingo!");
-            //        }
-            //    }
-            //}
-
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 6; i++)
             {
-                PictureBox pic = new PictureBox();
-                this.Controls.Add(pic);
-                pic.Top = 200;
-                pic.Left = 10 + i * 20;
-                pic.Height = 20;
-                pic.Width = 20;
-                if (i % 2 == 0)
+                for (int j = 0; j < 7; j++)
                 {
-                    pic.BackColor = Color.Black;
-                }
-                else
-                {
-                    pic.BackColor = Color.White;
-                }
-
-            }
-        }
-
-        private void btnCerca_Click(object sender, EventArgs e)
-        {
-            foreach(Control c in Controls)
-            {
-                if (c.Tag != null)
-                {
-                    if (c.Tag.ToString() == "5,4")
-                    {
-                        MessageBox.Show("Bingo!!!!");
-                        PictureBox p = (PictureBox)c;
-                        p.SizeMode= PictureBoxSizeMode.StretchImage;
-                        p.Image = Properties.Resources.Gettonerosso;
+                    //controllo se ci sono 4 gettoni dello stesso colore vicini nelle 4 situazioni
+                    try
+                    { 
+                        if (forza4[i, j] != 0 && forza4[i, j] == forza4[i + 1, j] && forza4[i + 1, j] == forza4[i + 2, j] && forza4[i + 2, j] == forza4[i + 3, j]) return forza4[i, j];
                     }
+                    catch {/*indice fuori dalla matrice per cui non fa niente*/}
+                    try
+                    {
+                        if (forza4[i, j] != 0 && forza4[i, j] == forza4[i, j + 1] && forza4[i, j + 1] == forza4[i, j + 2] && forza4[i, j + 2] == forza4[i, j + 3]) return forza4[i, j];
+                    }
+                    catch {/*indice fuori dalla matrice per cui non fa niente*/}
+                    try
+                    {
+                        if (forza4[i, j] != 0 && forza4[i, j] == forza4[i + 1, j + 1] && forza4[i + 1, j + 1] == forza4[i + 2, j + 2] && forza4[i + 2, j + 2] == forza4[i + 3, j + 3]) return forza4[i, j];
+                    }
+                    catch {/*indice fuori dalla matrice per cui non fa niente*/}
+                    try
+                    {
+                        if (forza4[i, j] != 0 && forza4[i, j] == forza4[i + 1, j - 1] && forza4[i + 1, j - 1] == forza4[i + 2, j - 2] && forza4[i + 2, j - 2] == forza4[i + 3, j - 3]) return forza4[i, j];
+                    }
+                    catch {/*indice fuori dalla matrice per cui non fa niente*/}
                 }
             }
+            return 0;
         }
     }
 }
