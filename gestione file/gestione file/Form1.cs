@@ -96,5 +96,18 @@ namespace gestione_file
 
             
         }
+
+        private void btnNascondi_Click(object sender, EventArgs e)
+        {
+            int[] vett = { 1,2,3,4,5,6,7};
+            foreach (int num in vett)
+            {
+                lblContenuto.Text += ","+ num;
+            }
+            foreach( Control c in Controls)
+            {
+                c.Visible = false;
+            }
+        }
     }
 }

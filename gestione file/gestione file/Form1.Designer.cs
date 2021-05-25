@@ -39,6 +39,8 @@ namespace gestione_file
             this.txtFile = new System.Windows.Forms.TextBox();
             this.btnLeggiFile = new System.Windows.Forms.Button();
             this.lstTesto = new System.Windows.Forms.ListBox();
+            this.btnNascondi = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnCrea
@@ -132,11 +134,34 @@ namespace gestione_file
             this.lstTesto.Size = new System.Drawing.Size(208, 308);
             this.lstTesto.TabIndex = 9;
             // 
+            // btnNascondi
+            // 
+            this.btnNascondi.BackColor = System.Drawing.Color.Red;
+            this.btnNascondi.Location = new System.Drawing.Point(628, 13);
+            this.btnNascondi.Name = "btnNascondi";
+            this.btnNascondi.Size = new System.Drawing.Size(134, 39);
+            this.btnNascondi.TabIndex = 10;
+            this.btnNascondi.Text = "Nascondi tutto";
+            this.btnNascondi.UseVisualStyleBackColor = false;
+            this.btnNascondi.Click += new System.EventHandler(this.btnNascondi_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(421, 145);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(98, 21);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.btnNascondi);
             this.Controls.Add(this.lstTesto);
             this.Controls.Add(this.btnLeggiFile);
             this.Controls.Add(this.txtFile);
@@ -166,6 +191,8 @@ namespace gestione_file
         private System.Windows.Forms.TextBox txtFile;
         private System.Windows.Forms.Button btnLeggiFile;
         private System.Windows.Forms.ListBox lstTesto;
+        private System.Windows.Forms.Button btnNascondi;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
